@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brokerage Subscription Evaluator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Brokerage Subscription Evaluator</h1>
+        <p>Is your brokerage subscription worth it? Enter your details below.</p>
+
+        <form id="evaluator-form">
+            <label>Starting Uninvested Balance ($ per month):</label>
+            <input type="number" id="balance" step="0.01" min="0" required title="Cash you keep uninvested each month to earn APY.">
+
+            <label>Daily Investment ($ on trading days):</label>
+            <input type="number" id="daily-investment" step="0.01" min="0" required title="Amount invested daily on trading days (e.g., $60).">
+
+            <label>Trading Days per Month (e.g., 21):</label>
+            <input type="number" id="trading-days" step="1" min="0" max="31" required title="Number of trading days in a month (typically 20-22).">
+
+            <label>Monthly IRA Contribution ($):</label>
+            <input type="number" id="ira-contribution" step="0.01" min="0" required title="Your monthly contribution to an IRA account.">
+
+            <label>APY on Uninvested Cash (%):</label>
+            <input type="number" id="apy" step="0.01" min="0" required title="Annual Percentage Yield on uninvested cash (e.g., 4.5%).">
+
+            <label>Annual Subscription Fee ($):</label>
+            <input type="number" id="fee" step="0.01" min="0" required title="Yearly cost of the subscription (e.g., $50).">
+
+            <label>IRA Match Percentage (%):</label>
+            <input type="number" id="match" step="0.01" min="0" required title="Percentage of IRA contributions matched by the brokerage (e.g., 3%).">
+
+            <label>Projection Years:</label>
+            <input type="number" id="years" step="1" min="1" value="1" required title="Number of years to project benefits (e.g., 1, 3, 5).">
+
+            <div class="presets">
+                <button type="button" onclick="loadPreset('custom')">Custom</button>
+                <button type="button" onclick="loadPreset('robinhood')">Robinhood Gold</button>
+                <button type="button" onclick="loadPreset('fidelity')">Fidelity Premium</button>
+            </div>
+
+            <button type="submit">Evaluate</button>
+        </form>
+
+        <!-- Overlay for results -->
+        <div id="results-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h2>Results</h2>
+                <p><strong>Annual Interest Earned:</strong> <span id="interest"></span></p>
+                <p><strong>Annual IRA Match:</strong> <span id="match-value"></span></p>
+                <p><strong>Total Benefit (Year 1):</strong> <span id="total-benefit"></span></p>
+                <p><strong>Net Gain/Loss (Year 1):</strong> <span id="net"></span></p>
+                <p><strong>Verdict:</strong> <span id="verdict"></span></p>
+                <p><strong>Total Net Gain/Loss (Over <span id="years-display"></span> Years):</strong> <span id="multi-year-net"></span></p>
+                <h3>Break-Even Points</h3>
+                <p><strong>Min Uninvested Balance:</strong> <span id="break-even-balance"></span></p>
+                <p><strong>Min Monthly IRA Contribution:</strong> <span id="break-even-ira"></span></p>
+                <canvas id="benefitChart" width="400" height="200"></canvas>
+                <button id="calculate-new">Calculate New</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
